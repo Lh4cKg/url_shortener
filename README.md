@@ -2,11 +2,13 @@
 
 This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
+### Url ობიექტის პარამეტრები ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* redirect_url - * რედირექთ ურლ ანუ ორიგინალი ლინკი რაზეც უნდა მოხდეს გადამისამართება. აუცილებელია
+* key - უნიკალური იდენტიფიკატორი ქი ან რაიმე მსგავსი, საჭიროებრისამებრ იქნება გამოყენებული. არ არის აუცილებელი.
+* tag - * ტაგი ანუ დამარკვა დაშორთქათებული ლინკების, მაგ. კამპანიების სახით ან რაიმე სხვა დატვითვით. აუცილებელია.
+* expired - ლინკის ვადის გასვლის თარიღი. ანუ ამ თარიღის პერიოდში იქნება ლინკი ხელმისაწვდომი. არ არის აუცილებელი.
+            თარიღი ფორმატია: %Y-%m-%d ანუ 2022-01-23
 
 ### How do I get set up? ###
 
