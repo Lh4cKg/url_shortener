@@ -1,0 +1,83 @@
+{% extends "admin/shortener/base.html" %}
+{% load i18n %}
+{% load admin_urls %}
+{#{% load import_export_tags %}#}
+{% load static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" type="text/css" href="{% static "css/import.css" %}" />{% endblock %}
+
+{% block breadcrumbs_last %}იმპორტი{% endblock %}
+
+{% block content %}
+    <p style="color: red">{{ invalid_format|default_if_none:'' }}</p>
+
+    <form enctype="multipart/form-data" action="{% url opts|admin_urlname:"process_import" %}" method="POST">
+      {% csrf_token %}
+        {{ ff.as_p }}
+{#        <div class="form-row field-file">#}
+{#            <div>#}
+{#                <label class="required" for="id_file">ფაილი:</label>#}
+{#                <input type="file" name="file" required="" id="id_file">#}
+{#            </div>#}
+{#        </div>#}
+{#      <p>#}
+{#        Below is a preview of data to be imported. If you are satisfied with the results, click 'Confirm import' #}
+{#      </p>#}
+      <div class="submit-row">
+        <input type="submit" class="default" name="confirm" value="შენახვა">
+      </div>
+    </form>
+
+
+  {% if invalid_rows %}
+
+      <h2>შეცდომები</h2>
+
+      <h2>ქვემოთ მოცემული ჩანაწერების ვალიდაცია ვერ მოხერხდა.</h2>
+
+      <p>გაასწორეთ შეცდომები ფაილში და ცადეთ თავიდან შეტვირთვა.</p>
+
+      <table class="import-preview">
+        <thead>
+          <tr>
+{#            {% for field in fields %}#}
+{#              <th>{{ field }}</th>#}
+{#            {% endfor %}#}
+              <th>Customer ID</th>
+              <th>User ID</th>
+              <th>Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for row in invalid_rows %}
+          <tr>
+            <td>
+              <span>{{ row.customer_id }}</span>
+              <div class="traceback"><code style="color: red;">{{ row.message.customer_id|default_if_none:'' }}</code></div>
+            </td>
+            <td class="errors">
+              <span>{{ row.user_id }}</span>
+              <div class="traceback"><code style="color: red;">{{ row.message.user_id|default_if_none:'' }}</code></div>
+            </td>
+            <td>
+              <span>{{ row.phone }}</span>
+              <div class="traceback"><code style="color: red;">{{ row.message.phone|default_if_none:'' }}</code></div>
+            </td>
+{#            <td>#}
+{#              <span>{{ row.first_name }}</span>#}
+{#              <div class="traceback"><code style="color: red;">{{ row.message.first_name|default_if_none:'' }}</code></div>#}
+{#            </td>#}
+{#            <td>#}
+{#              <span>{{ row.last_name }}</span>#}
+{#              <div class="traceback"><code style="color: red;">{{ row.message.last_name|default_if_none:'' }}</code></div>#}
+{#            </td>#}
+{#            <td>#}
+{#              <span>{{ row.person_id }}</span>#}
+{#              <div class="traceback"><code style="color: red;">{{ row.message.person_id|default_if_none:'' }}</code></div>#}
+{#            </td>#}
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+  {% endif %}
+{% endblock %}

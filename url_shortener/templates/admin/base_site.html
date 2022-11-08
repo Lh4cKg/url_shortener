@@ -1,0 +1,13 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            <img class="mb-4" src="{% static 'images/admin_logo.png' %}" alt="ორი ნაბიჯი">
+        </a>
+    </h1>
+{% endblock %}
+

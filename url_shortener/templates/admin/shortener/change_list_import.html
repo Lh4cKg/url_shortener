@@ -1,0 +1,10 @@
+{% extends "admin/shortener/change_list.html" %}
+
+{% block object-tools-items %}
+  {%  if lu_items %}
+    {% include "admin/shortener/change_list_urls.html" %}
+  {% else %}
+    {% include "admin/shortener/change_list_import_item.html" %}
+  {% endif %}
+  {{ block.super }}
+{% endblock %}
