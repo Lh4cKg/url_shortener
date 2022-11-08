@@ -5,6 +5,7 @@ MAINTAINER Logmind Software <software@logmind.com>
 RUN mkdir /src
 
 ENV PYTHONPATH $PYTHONPATH:/src
+ENV WEB_CONCURRENCY=6
 
 RUN pip install --upgrade pip
 
@@ -17,7 +18,4 @@ RUN pip install --upgrade pip && pip install -r requirements/prod.txt && rm -rf 
 
 EXPOSE 8000
 
-CMD sh -c 'uvicorn \
-            url_shortener.asgi:application \
-            --workers 16 \
-            --root-path url_shortener.asgi'
+CMD sh -c 'uvicorn url_shortener.asgi:application'
