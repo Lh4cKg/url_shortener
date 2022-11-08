@@ -15,3 +15,6 @@ DATABASES = {
         'PORT': 5432,
     }
 }
+
+STATIC_ROOT = '/src/staticfiles'
+MEDIA_ROOT = '/src/media'
