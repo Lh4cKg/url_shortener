@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
 OUR_APPS = [
     'apps.shortener.apps.ShortenerConfig',
+    'apps.tokens.apps.TokensConfig',
 ]
 
 THIRD_PARTY_APPS = [
@@ -147,3 +148,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Shortener configs
 
 DOMAIN = 'go.2n.ge'
+
+# JWT Configuration
+
+JWT = {
+    'ALGORITHM': 'HS256',
+    'VERIFYING_KEY': None,
+    'AUDIENCE': None,
+    'ISSUER': None,
+    'SECRET': SECRET_KEY,
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'USER_ID_FIELD': 'id',
+    'USER_ID_CLAIM': 'user_id',
+    'TOKEN_TYPE_CLAIM': 'token_type',
+    'JTI_CLAIM': 'jti',
+    'LEEWAY': 0,
+    'JSON_ENCODER': None
+}
