@@ -10,6 +10,8 @@ from django.http import HttpResponseRedirect, HttpResponseGone, JsonResponse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
+from apps.tokens.backends import AccessToken
+from apps.tokens.exceptions import TokenError
 from apps.utils import agenerate_key
 from .forms import UrlForm
 from .models import Url
@@ -40,8 +42,25 @@ class UrlRedirectView(generic.View):
 class ShortenUrlMixin(object):
 
     @csrf_exempt
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+    async def dispatch(self, request, *args, **kwargs):
+        try:
+            key, token = request.headers.get('Authorization', '').split()
+            if key != 'Bearer':
+                return JsonResponse(
+                    {'message': 'Unable to access with provided credentials'},
+                    status=401
+                )
+        except (ValueError, IndexError):
+            return JsonResponse(
+                {'message': 'Unable to access with provided credentials'},
+                status=401
+            )
+        try:
+            AccessToken(token=token)
+        except TokenError as e:
+            msg = f'Unable to access with provided credentials. {e.args[0]}'
+            return JsonResponse({'message': msg}, status=401)
+        return await super().dispatch(request, *args, **kwargs)
 
     @staticmethod
     async def loads_request_data(request):
