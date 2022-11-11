@@ -14,9 +14,8 @@ from .exceptions import TokenError, TokenBackendError
 JwtSettings = namedtuple('JwtSettings', [
     'ALGORITHM', 'VERIFYING_KEY', 'AUDIENCE',
     'ISSUER', 'SECRET', 'ACCESS_TOKEN_LIFETIME',
-    'AUTH_HEADER_TYPES', 'AUTH_TOKEN_CLASSES',
-    'USER_ID_CLAIM', 'USER_ID_FIELD', 'TOKEN_TYPE_CLAIM',
-    'JTI_CLAIM', 'LEEWAY', 'JSON_ENCODER'
+    'AUTH_HEADER_TYPES', 'USER_ID_CLAIM', 'USER_ID_FIELD',
+    'TOKEN_TYPE_CLAIM', 'JTI_CLAIM', 'LEEWAY', 'JSON_ENCODER'
 ])
 jwt_settings = JwtSettings(**settings.JWT)
 

@@ -10,7 +10,7 @@ from django.http import HttpResponseRedirect, HttpResponseGone, JsonResponse
 from django.views import generic
 from django.views.decorators.csrf import csrf_exempt
 
-from apps.tokens.backends import AccessToken
+from apps.tokens.backends import AccessToken, jwt_settings
 from apps.tokens.exceptions import TokenError
 from apps.utils import agenerate_key
 from .forms import UrlForm
@@ -44,8 +44,10 @@ class ShortenUrlMixin(object):
     @csrf_exempt
     async def dispatch(self, request, *args, **kwargs):
         try:
-            key, token = request.headers.get('Authorization', '').split()
-            if key != 'Bearer':
+            header_type, token = request.headers.get(
+                'Authorization', ''
+            ).split()
+            if header_type not in jwt_settings.AUTH_HEADER_TYPES:
                 return JsonResponse(
                     {'message': 'Unable to access with provided credentials'},
                     status=401
