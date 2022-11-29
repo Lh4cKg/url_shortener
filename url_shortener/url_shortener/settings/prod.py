@@ -1,7 +1,7 @@
 from .base import *  # noqa
 
 
-ALLOWED_HOSTS = ['go.2n.ge']
+ALLOWED_HOSTS = ['s.2n.ge']
 
 DEBUG = False
 
@@ -9,9 +9,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'shortenerdb',
-        'USER': 'shortener_user',
+        'USER': 'postgres',
         'PASSWORD': 'short!@#2nge43ener',
-        'HOST': 'pgdb',
+        'HOST': '127.0.0.1',
         'PORT': 5432,
     }
 }
