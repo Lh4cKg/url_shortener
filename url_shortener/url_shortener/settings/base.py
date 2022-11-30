@@ -147,7 +147,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Shortener configs
 
-DOMAIN = 'go.2n.ge'
+DOMAIN = 's.2n.ge'
 
 # JWT Configuration
 
