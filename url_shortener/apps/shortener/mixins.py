@@ -14,7 +14,7 @@ from .forms import UploadFileForm
 
 
 def handle_uploaded_file(f):
-    fp = settings.BASE_DIR / 'media' / f.name
+    fp = settings.MEDIA_ROOT / f.name
     with open(fp, 'wb+') as destination:
         for chunk in f.chunks():
             destination.write(chunk)

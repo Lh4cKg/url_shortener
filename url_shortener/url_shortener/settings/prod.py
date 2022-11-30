@@ -17,4 +17,4 @@ DATABASES = {
 }
 
 STATIC_ROOT = '/src/staticfiles'
-MEDIA_ROOT = '/src/media'
+MEDIA_ROOT = Path('/src/media').resolve()
