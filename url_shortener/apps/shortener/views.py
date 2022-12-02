@@ -77,6 +77,9 @@ class ShortenUrlView(ShortenUrlMixin, generic.View):
     async def post(self, request, *args, **kwargs):
         form = UrlForm(data=await self.loads_request_data(request))
         if await sync_to_async(form.is_valid)():
+            tag = await Url.objects.filter(tag=form.cleaned_data['tag']).afirst()
+            if tag:
+                return JsonResponse({'errors': f'{tag} tag already exists'})
             url_key = await agenerate_key(form.cleaned_data['redirect_url'])
             url = await Url.objects.filter(url_key=url_key).afirst()
             if url:
