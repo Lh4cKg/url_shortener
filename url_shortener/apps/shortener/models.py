@@ -6,7 +6,7 @@ class Url(models.Model):
     redirect_url = models.TextField()
     url_key = models.CharField(max_length=30, db_index=True)
     usage_count = models.IntegerField(default=0)
-    key = models.CharField(max_length=256, null=True, blank=True, unique=True)
+    key = models.CharField(max_length=256, null=True, blank=True)
     tag = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     expired = models.DateTimeField(null=True, blank=True)
@@ -16,7 +16,7 @@ class Url(models.Model):
         verbose_name = 'Url'
         verbose_name_plural = 'Urls'
         unique_together = (
-            ('url_key', 'tag')
+            ('key', 'tag')
         )
 
     def __str__(self):
