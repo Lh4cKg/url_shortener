@@ -16,7 +16,7 @@ from .models import Url
 
 @admin.register(Url)
 class UrlAdmin(BaseImportMixin, admin.ModelAdmin):
-    list_display = ['url_key', 'key', 'tag', 'usage_count', 'redirect_url']
+    list_display = ['url_key', 'key', 'tag', 'usage_count', 'redirect_url', 'shortened_url']
     list_display_links = list_display
 
     import_template_name = 'admin/shortener/import_urls.html'
@@ -61,7 +61,8 @@ class UrlAdmin(BaseImportMixin, admin.ModelAdmin):
         return StreamingHttpResponse(
             (
                 writer.writerow((
-                    r.redirect_url, r.url_key, r.key, r.tag, r.usage_count
+                    r.redirect_url, r.url_key, r.key, r.tag, r.usage_count,
+                    r.shortened_url
                 ))
                 for r in chain((UrlFields(),), qs)
             ),

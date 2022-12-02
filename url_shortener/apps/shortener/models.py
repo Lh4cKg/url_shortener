@@ -1,5 +1,6 @@
 from django.utils import timezone
 from django.db import models
+from django.conf import settings
 
 
 class Url(models.Model):
@@ -10,6 +11,10 @@ class Url(models.Model):
     tag = models.CharField(max_length=50)
     created_at = models.DateTimeField(auto_now_add=True)
     expired = models.DateTimeField(null=True, blank=True)
+
+    @property
+    def shortened_url(self):
+        return f'{settings.DOMAIN}/{self.url_key}'
 
     class Meta:
         db_table = 'urls'

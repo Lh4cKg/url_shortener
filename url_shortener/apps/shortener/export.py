@@ -14,3 +14,4 @@ class UrlFields:
     key: str = field(default='key')
     tag: str = field(default='tag')
     usage_count: str = field(default='usage_count')
+    shortened_url:  str = field(default='shortened_url')
