@@ -3,4 +3,5 @@
 
 {#{% if has_import_permission %}#}
 <li><a href='{% url opts|admin_urlname:"import" %}' class="import_link">{% trans "იმპორტი" %}</a></li>
+<li><a href='{% url opts|admin_urlname:"export_csv" %}' class="import_link">{% trans "ექსპორტი" %}</a></li>
 {#{% endif %}#}
