@@ -1,3 +1,4 @@
+import asyncio
 import csv
 from dataclasses import asdict
 from itertools import chain
@@ -5,7 +6,7 @@ from typing import List
 
 from apps.utils import generate_key
 from django.contrib import admin
-from django.http import StreamingHttpResponse
+from django.http import StreamingHttpResponse, HttpResponse
 from django.urls import path
 
 from .data_models import UrlRow
@@ -55,20 +56,14 @@ class UrlAdmin(BaseImportMixin, admin.ModelAdmin):
         return my_urls + urls
 
     def export_csv_view(self, request, *args, **kwargs):
-        qs = Url.objects.all()
-        pseudo_buffer = Echo()
-        writer = csv.writer(pseudo_buffer)
         headers = {
             'Content-Disposition': 'attachment; filename="shortened-urls.csv"'
         }
-        return StreamingHttpResponse(
-            (
-                writer.writerow((
-                    r.redirect_url, r.url_key, r.key, r.tag, r.usage_count,
-                    r.shortened_url, r.created_at
-                ))
-                for r in chain((UrlFields(),), qs)
-            ),
-            content_type='text/csv',
-            headers=headers,
-        )
+        response = HttpResponse(content_type='text/csv', headers=headers)
+        writer = csv.writer(response)
+        for r in chain((UrlFields(),), Url.objects.all()):
+            writer.writerow((
+                r.redirect_url, r.url_key, r.key, r.tag, r.usage_count,
+                r.shortened_url, r.created_at
+            ))
+        return response
