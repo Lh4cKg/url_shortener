@@ -1,4 +1,3 @@
-import asyncio
 import csv
 from dataclasses import asdict
 from itertools import chain
